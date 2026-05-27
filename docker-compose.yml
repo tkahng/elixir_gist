@@ -1,0 +1,19 @@
+services:
+  elixir_gist_db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: elixir_gist_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - elixir_gist_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U garden"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  elixir_gist_db_data:
